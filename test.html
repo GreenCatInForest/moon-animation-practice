@@ -1,0 +1,308 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rotating Moon with Real Picture</title>
+    <style>
+      canvas {
+        border: 1px solid #333;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const moonRadius = 150;
+      const moonImage = new Image();
+      moonImage.onload = function () {
+        let angle = 0;
+
+        function drawMoon() {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.save();
+          context.translate(centerX, centerY);
+          context.rotate(angle);
+          context.drawImage(
+            moonImage,
+            -moonRadius,
+            -moonRadius,
+            moonRadius * 2,
+            moonRadius * 2
+          );
+          context.restore();
+
+          angle += 0.005;
+          requestAnimationFrame(drawMoon);
+        }
+
+        drawMoon();
+      };
+      moonImage.src = "full-moon-1869760_1280.jpg";
+    </script>
+  </body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>3D Moon Animation</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script>
+      // Setup scene, camera and renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // Create moon geometry
+      const geometry = new THREE.SphereGeometry(5, 32, 32);
+
+      // Load moon texture and create material
+      const textureLoader = new THREE.TextureLoader();
+      const texture = textureLoader.load("full-moon-1869760_1280.jpg");
+      const material = new THREE.MeshStandardMaterial({
+        map: texture,
+      });
+
+      // Create moon mesh
+      const moon = new THREE.Mesh(geometry, material);
+      scene.add(moon);
+
+      // Add lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
+      const pointLight = new THREE.PointLight(0xffffff, 0.5);
+      pointLight.position.set(20, 20, 20);
+      scene.add(pointLight);
+
+      // Set initial camera position
+      camera.position.z = 15;
+
+      // Animate moon rotation
+      function animate() {
+        requestAnimationFrame(animate);
+        moon.rotation.y += 0.005;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Resize renderer on window resize
+      window.addEventListener("resize", function () {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      });
+    </script>
+  </body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>3D Moon Animation</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script>
+      // Setup scene, camera and renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // Create moon geometry
+      const geometry = new THREE.SphereGeometry(5, 32, 32);
+
+      // Load moon texture and create material
+      const textureLoader = new THREE.TextureLoader();
+      const texture = textureLoader.load("full-moon-1869760_1280.jpg");
+      const material = new THREE.MeshStandardMaterial({
+        map: texture,
+      });
+
+      // Create moon mesh
+      const moon = new THREE.Mesh(geometry, material);
+      scene.add(moon);
+
+      // Add lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
+      const pointLight = new THREE.PointLight(0xffffff, 0.5);
+      pointLight.position.set(20, 20, 20);
+      scene.add(pointLight);
+
+      // Set initial camera position
+      camera.position.z = 15;
+
+      // Set initial rotation values
+      let rotationAxis = new THREE.Vector3(
+        Math.random(),
+        Math.random(),
+        Math.random()
+      ).normalize();
+      let rotationSpeed = Math.random() * 0.005 + 0.002;
+
+      // Animate moon rotation
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // Randomly update rotation axis and speed
+        if (Math.random() < 0.002) {
+          rotationAxis = new THREE.Vector3(
+            Math.random(),
+            Math.random(),
+            Math.random()
+          ).normalize();
+          rotationSpeed = Math.random() * 0.005 + 0.002;
+        }
+
+        // Apply rotation
+        moon.rotation.x += rotationAxis.x * rotationSpeed;
+        moon.rotation.y += rotationAxis.y * rotationSpeed;
+        moon.rotation.z += rotationAxis.z * rotationSpeed;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Resize renderer on window resize
+      window.addEventListener("resize", function () {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      });
+    </script>
+  </body>
+</html>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>3D Moon Animation</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script>
+      // Setup scene, camera and renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // Create moon geometry
+      const geometry = new THREE.SphereGeometry(5, 64, 64);
+
+      // Load moon texture and create material
+      const textureLoader = new THREE.TextureLoader();
+      const texture = textureLoader.load(
+        "full-moon-1869760_1280.jpg"
+      );
+      const normalMap = textureLoader.load(
+        "full-moon-1869760_1280.jpg"
+      );
+      const material = new THREE.MeshStandardMaterial({
+        map: texture,
+        normalMap: normalMap,
+        roughness: 0.8,
+        metalness: 0.1,
+      });
+
+      // Create moon mesh
+      const moon = new THREE.Mesh(geometry, material);
+      scene.add(moon);
+
+      // Add lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
+      const pointLight = new THREE.PointLight(0xffffff, 0.5);
+      pointLight.position.set(20, 20, 20);
+      scene.add(pointLight);
+
+      // Set initial camera position
+      camera.position.z = 15;
+
+      // Set initial rotation values
+      let rotationAxis = new THREE.Vector3(
+        Math.random(),
+        Math.random(),
+        Math.random()
+      ).normalize();
+      let rotationSpeed = Math.random() * 0.005 + 0.002;
+
+      // Animate moon rotation
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // Randomly update rotation axis and speed
+        if (Math.random() < 0.002) {
+          rotationAxis = new THREE.Vector3(
+            Math.random(),
+            Math.random(),
+            Math.random()
+          ).normalize();
+          rotationSpeed = Math.random() * 0.005 + 0.002;
+        }
+
+        // Apply rotation
+        moon.rotation.x += rotationAxis.x * rotationSpeed;
+        moon.rotation.y += rotationAxis.y * rotationSpeed;
+        moon.rotation.z += rotationAxis.z * rotationSpeed;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Resize renderer on window resize
+      window.addEventListener("resize", function () {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+       
+      } !-->
